@@ -13,7 +13,7 @@ func NewClient(baseurl string) client {
 	}
 }
 
-func (c *client) CreateLink() {
+func (c *client) CreateLink(link Link) {
 	c.resty.R().
 		SetAuthToken(c.AccessToken).
 		Post("api/public/v1/products")
