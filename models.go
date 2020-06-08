@@ -17,6 +17,7 @@ type Link struct {
 	Weight                  int    `json:"weight,omitempty"`
 	SoftDescriptor          string `json:"softDescriptor,omitempty"`
 	MaxNumberOfInstallments string `json:"maxNumberOfInstallments,omitempty"`
+	Type                    string `json:"type,omitempty"`
 
 	Shipping   Shipping   `json:"shipping,omitempty"`
 	Recurrency Recurrency `json:"recurrent,omitempty"`
