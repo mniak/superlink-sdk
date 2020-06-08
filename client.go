@@ -69,7 +69,7 @@ func (c *Client) CreateLink(link Link) (result LinkCreated, err error) {
 	}
 	resp, err := c.resty.R().
 		SetAuthToken(token.AccessToken).
-		SetResult(&LinkCreated{}).
+		SetResult(LinkCreated{}).
 		SetBody(link).
 		Post("api/public/v1/products")
 
