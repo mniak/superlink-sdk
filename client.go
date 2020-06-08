@@ -48,6 +48,9 @@ func (c *Client) getToken() (*oauth2.Token, error) {
 		if err != nil {
 			return nil, err
 		}
+		if !resp.IsSuccess() {
+			return nil, fmt.Errorf("invalid status %s", resp.Status())
+		}
 		c.token = resp.Result().(*oauth2.Token)
 		return c.token, nil
 	}
