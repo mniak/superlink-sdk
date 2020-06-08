@@ -76,5 +76,9 @@ func (c *Client) CreateLink(link Link) (result LinkCreated, err error) {
 	if err != nil {
 		return
 	}
+	if !resp.IsSuccess() {
+		err = fmt.Errorf("invalid status %s", resp.Status())
+		return
+	}
 	return resp.Result().(LinkCreated), nil
 }
