@@ -21,10 +21,10 @@ func NewClient(baseurl, clientid, clientsecret string) *Client {
 	return &Client{
 		resty: resty.New().SetHostURL(baseurl),
 		authConfig: clientcredentials.Config{
-			ClientID:     "b99a463f-88db-442a-b5fa-982187b68f5c",
-			ClientSecret: "VXT9EsUmN2JhszsEtRnb0bBXkUcyahsNtkkizGi+WfU=",
-			Scopes:       []string{"CieloApi"},
+			ClientID:     clientid,
+			ClientSecret: clientsecret,
 			TokenURL:     fmt.Sprintf("%s/api/public/v2/token", baseurl),
+			AuthStyle:    oauth2.AuthStyleAutoDetect,
 		},
 	}
 }
