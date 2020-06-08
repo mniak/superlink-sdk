@@ -82,3 +82,21 @@ func (c *Client) CreateLink(link Link) (result LinkCreated, err error) {
 	}
 	return *resp.Result().(*LinkCreated), nil
 }
+
+func (c *Client) DeleteLink(id string) error {
+	token, err := c.getToken()
+	if err != nil {
+		return err
+	}
+	resp, err := c.resty.R().
+		SetAuthToken(token.AccessToken).
+		Delete("api/public/v1/products/" + id)
+
+	if err != nil {
+		return err
+	}
+	if !resp.IsSuccess() {
+		return fmt.Errorf("invalid status %s", resp.Status())
+	}
+	return nil
+}
