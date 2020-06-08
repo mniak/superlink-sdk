@@ -80,5 +80,5 @@ func (c *Client) CreateLink(link Link) (result LinkCreated, err error) {
 		err = fmt.Errorf("invalid status %s", resp.Status())
 		return
 	}
-	return resp.Result().(LinkCreated), nil
+	return *resp.Result().(*LinkCreated), nil
 }
