@@ -11,7 +11,7 @@ const (
 type Link struct {
 	Name                    string `json:"name,omitempty"`
 	Description             string `json:"description,omitempty"`
-	ShowDescription         string `json:"showDescription,omitempty"`
+	ShowDescription         bool   `json:"showDescription,omitempty"`
 	Price                   int    `json:"price,omitempty"`
 	ExpirationDate          string `json:"expirationDate,omitempty"`
 	Weight                  int    `json:"weight,omitempty"`
