@@ -1,7 +1,6 @@
 package superlink
 
 import (
-	"context"
 	"fmt"
 	"time"
 
@@ -31,10 +30,26 @@ func NewClient(baseurl, clientid, clientsecret string) *Client {
 
 func (c *Client) getToken() (*oauth2.Token, error) {
 	if c.token == nil || c.token.Expiry.Before(time.Now().Add(5*time.Second)) {
-		ctx := context.Background()
-		token, err := c.authConfig.Token(ctx)
-		c.token = token
-		return c.token, err
+		/* BUG in the authentication API. It does not url-decode the password
+		   For this reason I include an alternative (wrong but working) using resty. */
+		// ctx := context.Background()
+		// token, err := c.authConfig.Token(ctx)
+		// c.token = token
+		// return c.token, err
+
+		resp, err := c.resty.R().
+			SetBasicAuth(c.authConfig.ClientID, c.authConfig.ClientSecret).
+			SetMultipartFormData(map[string]string{
+				"grant_type": "client_credentials",
+			}).
+			SetResult(oauth2.Token{}).
+			Post(c.authConfig.TokenURL)
+
+		if err != nil {
+			return nil, err
+		}
+		c.token = resp.Result().(*oauth2.Token)
+		return c.token, nil
 	}
 	return c.token, nil
 }
